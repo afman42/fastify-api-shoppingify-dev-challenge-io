@@ -1,3 +1,4 @@
+import { env } from "./config/env";
 import { db } from "./db"
 import buildServer from "./server"
 import { migrate } from "drizzle-orm/node-postgres/migrator";
@@ -14,7 +15,7 @@ async function main() {
                 console.log(err)
                 process.exit(1)
             }
-            server.listen({ port: 3000, host:"0.0.0.0" })
+            server.listen({ port: env.PORT, host: env.HOST })
             console.log("Listening server localhost:3000")
         })
     } catch (error) {
