@@ -21,3 +21,8 @@ export async function selectWhereId(id: string) {
     let result = await db.select().from(kategoris).where(eq(kategoris.id,parseInt(id)))
     return result[0]
 }
+
+export async function selectAll() {
+    let result = await db.select().from(kategoris)
+    return result
+}

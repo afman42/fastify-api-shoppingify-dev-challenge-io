@@ -8,34 +8,16 @@ export const jsonMetaAndData = (statusCode: number, responseStatus: string, data
     }
 }
 
-export const properties200Object = {
-    meta: {
-        statusCode: {
-          type: "number",
-        },
-        responseStatus: {
-          type: "string"
-        }
-      },
-    data: {
-        anyOf:[
-            { type: 'array' },
-            { type: 'object' }
-        ],
-        properties: {
-            id: {
-                type: 'number',
+export const propertiesJsonMetaAndData = (data: any) => {
+    return {
+        meta: {
+            statusCode: {
+              type: "number",
             },
-            namaKategori: {
-                type: 'string'
-            },
-            createdAt: {
-                type: 'string'
-            },
-            updatedAt: {
-                type: 'string',
+            responseStatus: {
+              type: "string"
             }
-        }
-          
+        },
+        data
     }
 }

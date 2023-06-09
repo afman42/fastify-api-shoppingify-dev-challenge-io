@@ -1,6 +1,7 @@
 import { z } from "zod";
 import zodToJsonSchema from "zod-to-json-schema"
-import { properties200Object } from "../utils";
+import { propertiesJsonMetaAndData } from "../utils";
+import { FastifySchema } from "fastify";
 
 export const createKategoriBodySchema = z.object({
     namaKategori: z.string()
@@ -12,43 +13,121 @@ export const createKategoriValidationSchema = z.object({
 
 export type CreateKategoriBody = z.infer<typeof createKategoriBodySchema>
 
-export const responseSchema = {
-  response: {
-    200: {
-      description: 'Returns Kategori model',
-      type: 'object',
-      properties: {
-        ...properties200Object
+let responseData200Array = {
+  type: 'array',
+  properties: {
+      id: {
+          type: 'number',
+      },
+      namaKategori: {
+          type: 'string'
+      },
+      createdAt: {
+          type: 'string'
+      },
+      updatedAt: {
+          type: 'string',
       }
-    },
-    422: {
-      description: 'Kategori Validation',
-      type: 'object',
-      properties: {
-        _errors: {
-          type: 'array'
-        },
-        namaKategori: {
-            _errors: {
-                type: "array"
-            }
-        }
+  } 
+}
+
+let responseData200Oject = {
+  type: 'object',
+  properties: {
+      id: {
+          type: 'number',
+      },
+      namaKategori: {
+          type: 'string'
+      },
+      createdAt: {
+          type: 'string'
+      },
+      updatedAt: {
+          type: 'string',
       }
+  } 
+}
+
+let responseData404 = {
+  type: 'object',
+  properties: {
+    message: { type: "string"}
+  }
+}
+
+let responseData422 = {
+  _errors: {
+    type: 'array'
+  },
+  namaKategori: {
+      _errors: {
+          type: "array"
+      }
+  }
+}
+
+export const properties200ResponseOject = {
+  200: {
+    description: 'Returns Kategori model',
+    type: 'object',
+    properties: {
+      ...propertiesJsonMetaAndData(responseData200Oject)
+    }
+  },
+}
+
+export const properties200ResponseArray = {
+  200: {
+    description: 'Returns Kategori model',
+    type: 'object',
+    properties: {
+      ...propertiesJsonMetaAndData(responseData200Array)
+    }
+  },
+}
+
+export const properties422Response = {
+  422: {
+    description: 'Kategori Validation',
+    type: 'object',
+    properties: {
+      ...propertiesJsonMetaAndData(responseData422)
     }
   }
 }
 
-export const createKategoriJsonSchema = {
-    summary: "Returns a kategori",
-    description: 'Returns a user when create kategori',
-    tags: ['Kategori'],
-    body: zodToJsonSchema(createKategoriBodySchema,"createKategoriBodySchema"),
-    ...responseSchema
+export const properties404Response = {
+  404: {
+    description: 'Kategori Not Found',
+    type: 'object',
+    properties: {
+      ...propertiesJsonMetaAndData(responseData404)
+    }
+  }
 }
 
-export const updateKategoriJsonSchema = {
+// export const responseSchema = {
+//   response: {
+//     ...properties200Response,
+//     ...properties422Response
+//   }
+// }
+
+export const createKategoriJsonSchema: FastifySchema = {
+    summary: "Returns a kategori",
+    description: 'Returns a kategori when create kategori',
+    tags: ['Kategori'],
+    body: zodToJsonSchema(createKategoriBodySchema,"createKategoriBodySchema"),
+    response: {
+      ...properties200ResponseOject,
+      ...properties422Response
+    }
+}
+
+export const updateKategoriJsonSchema: FastifySchema = {
   summary: "Returns a kategori",
-    description: 'Returns a user when update kategori',
+    description: 'Returns a kategori when update kategori',
     tags: ['Kategori'],
     body: zodToJsonSchema(createKategoriBodySchema,"createKategoriBodySchema"),
     params: {
@@ -60,5 +139,37 @@ export const updateKategoriJsonSchema = {
         }
       }
     },
-    ...responseSchema
+    response: {
+      ...properties200ResponseOject,
+      ...properties422Response,
+      ...properties404Response
+    }
+}
+
+export const allKategoriJsonSchema: FastifySchema = {
+  summary: "Returns all kategori",
+  description: 'Returns all kategori',
+  tags: ['Kategori'],
+  response: {
+    ...properties200ResponseArray,
+  }
+}
+
+export const deleteKategoriJsonSchema: FastifySchema = {
+  summary: "Delete a kategori",
+  description: 'Delete a kategori',
+  tags: ['Kategori'],
+  params: {
+    type: 'object',
+    properties: {
+      id: {
+        type: 'string',
+        description: 'id kategori'
+      }
+    }
+  },
+  response: {
+    ...properties200ResponseOject,
+    ...properties404Response
+  }
 }

@@ -1,8 +1,16 @@
 import { FastifyInstance } from "fastify";
-import { CreateKategoriBody, createKategoriJsonSchema, updateKategoriJsonSchema } from "../schemas/kategori";
-import { createKategoriHandler, updateKategoriHandler } from "../controllers/kategori";
+import { CreateKategoriBody, allKategoriJsonSchema, createKategoriJsonSchema, deleteKategoriJsonSchema, updateKategoriJsonSchema } from "../schemas/kategori";
+import { allKategoriHandler, createKategoriHandler, deleteKategoriHandler, updateKategoriHandler } from "../controllers/kategori";
 
 export default async  function kategorisRoutes(app: FastifyInstance) {
+    app.get(
+        "/",
+        {
+            schema: allKategoriJsonSchema
+        },
+        allKategoriHandler
+    )
+
     app.post<{
         Body: CreateKategoriBody,
     }>(
@@ -21,5 +29,13 @@ export default async  function kategorisRoutes(app: FastifyInstance) {
             schema: updateKategoriJsonSchema
         },
         updateKategoriHandler
+    )
+
+    app.delete(
+        "/delete/:id",
+        {
+            schema: deleteKategoriJsonSchema
+        },
+        deleteKategoriHandler
     )
 }
