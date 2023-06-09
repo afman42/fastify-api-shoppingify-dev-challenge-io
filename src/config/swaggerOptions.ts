@@ -17,7 +17,7 @@ const swaggerOptions: SwaggerOptions = {
       produces: ['application/json'],
       tags: [
         { name: 'User', description: 'User related end-points' },
-        // { name: 'code', description: 'Code related end-points' }
+        { name: 'Kategori', description: 'Kategori related end-points' }
       ],
       definitions: {
         User: {
@@ -28,6 +28,13 @@ const swaggerOptions: SwaggerOptions = {
             firstName: { type: 'string' },
             lastName: { type: 'string' },
             email: {type: 'string', format: 'email' }
+          }
+        },
+        createKategoriBodySchema: {
+          type: "object",
+          required: ["namaKategori"],
+          properties: {
+            namaKategori: { type: "string" }
           }
         }
       },

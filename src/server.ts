@@ -1,5 +1,5 @@
 import fastify from "fastify"
-import { routeUser } from "./routes"
+import { kategorisRoutes, routeUser } from "./routes"
 import { swaggerOptions } from "./config"
 
 const buildServer = () => {
@@ -9,7 +9,7 @@ const buildServer = () => {
     server.register(import("@fastify/swagger-ui"),{
         routePrefix: '/docs',
         uiConfig: {
-          docExpansion: 'full',
+          docExpansion: 'list',
           deepLinking: false
         },
         uiHooks: {
@@ -23,6 +23,7 @@ const buildServer = () => {
     })
 
     server.register(routeUser, { prefix: "/api/user" })
+    server.register(kategorisRoutes, { prefix: "api/kategori"})
 
     return server
 }
