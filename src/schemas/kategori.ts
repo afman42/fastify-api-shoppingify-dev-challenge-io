@@ -134,7 +134,7 @@ export const updateKategoriJsonSchema: FastifySchema = {
       type: 'object',
       properties: {
         id: {
-          type: 'string',
+          type: 'number',
           description: 'id kategori'
         }
       }
@@ -163,7 +163,7 @@ export const deleteKategoriJsonSchema: FastifySchema = {
     type: 'object',
     properties: {
       id: {
-        type: 'string',
+        type: 'number',
         description: 'id kategori'
       }
     }

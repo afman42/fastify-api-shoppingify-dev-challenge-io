@@ -24,6 +24,9 @@ export const updateKategoriHandler = async (request: FastifyRequest, reply: Fast
     try {
         const namaKategori = (request.body as any).namaKategori as string
         const id = (request.params as any).id as string
+        if(isNaN(parseInt(id))) {
+            return reply.code(404).send(jsonMetaAndData(404,"error",{ message: "The id must be number" }))
+        }
         const resultId = await selectWhereId(id)
         if (!resultId) {
             return reply.code(404).send(jsonMetaAndData(404,"error",{ message: "not found" }))
@@ -56,6 +59,9 @@ export const allKategoriHandler = async (request: FastifyRequest, reply: Fastify
 export const deleteKategoriHandler = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         const id = (request.params as any).id as string
+        if(isNaN(parseInt(id))) {
+            return reply.code(404).send(jsonMetaAndData(404,"error",{ message: "The id must be number" }))
+        }
         const resultId = await selectWhereId(id)
         if (!resultId) {
             return reply.code(404).send(jsonMetaAndData(404,"error",{ message: "not found" }))
