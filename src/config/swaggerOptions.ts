@@ -17,7 +17,8 @@ const swaggerOptions: SwaggerOptions = {
       produces: ['application/json'],
       tags: [
         { name: 'User', description: 'User related end-points' },
-        { name: 'Kategori', description: 'Kategori related end-points' }
+        { name: 'Kategori', description: 'Kategori related end-points' },
+        { name: 'Item', description: 'Item related end-points' }
       ],
       definitions: {
         User: {
@@ -35,6 +36,24 @@ const swaggerOptions: SwaggerOptions = {
           required: ["namaKategori"],
           properties: {
             namaKategori: { type: "string" }
+          }
+        },
+        createItemBodySchema: {
+          type: "object",
+          required: ["nama","idKategori"],
+          properties: {
+            nama: {
+              type: 'string'
+            },
+            catatan: {
+              type: "string"
+            },
+            gambar_url: {
+              type: "string"
+            },
+            idKategori: {
+              type: "number"
+            },
           }
         }
       },

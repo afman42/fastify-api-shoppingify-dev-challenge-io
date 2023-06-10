@@ -1,5 +1,5 @@
 import fastify from "fastify"
-import { kategorisRoutes, routeUser } from "./routes"
+import { itemsRoutes, kategorisRoutes, routeUser } from "./routes"
 import { swaggerOptions } from "./config"
 
 const buildServer = () => {
@@ -23,7 +23,8 @@ const buildServer = () => {
     })
 
     server.register(routeUser, { prefix: "/api/user" })
-    server.register(kategorisRoutes, { prefix: "api/kategori"})
+    server.register(kategorisRoutes, { prefix: "/api/kategori"})
+    server.register(itemsRoutes, { prefix: "/api/item"})
 
     return server
 }
