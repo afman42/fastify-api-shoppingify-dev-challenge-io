@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { createKategoriValidationSchema } from "../schemas/kategori";
 import { createKategori, deleteKategori, selectAll, selectWhereId, updateKategori } from "../services/kategori";
-import { jsonMetaAndData } from "../utils";
+import { formatDateNowISOString, jsonMetaAndData } from "../utils";
 
 export const createKategoriHandler = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
@@ -37,7 +37,7 @@ export const updateKategoriHandler = async (request: FastifyRequest, reply: Fast
             console.log(fmtResultValidation)
             return reply.code(422).send(jsonMetaAndData(422,"error",fmtResultValidation))
         }
-        const result = await updateKategori(namaKategori, id)
+        const result = await updateKategori(namaKategori, id,formatDateNowISOString())
         return reply.code(200).send(jsonMetaAndData(200,'success',result))   
     } catch (error) {
         reply.code(500).send(jsonMetaAndData(500,"error",error))
@@ -48,7 +48,7 @@ export const updateKategoriHandler = async (request: FastifyRequest, reply: Fast
 export const allKategoriHandler = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         const result = await selectAll()
-        console.log(result)
+        // console.log(result)
         return reply.code(200).send(jsonMetaAndData(200,"success",result))
     } catch (error) {
         reply.code(500).send(jsonMetaAndData(500,"error",error))
