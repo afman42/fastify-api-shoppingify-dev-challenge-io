@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import json_users from '../../data/users.json'
+import json_users from '../data/users.json'
 
 type IJsonusers = typeof json_users;
 
