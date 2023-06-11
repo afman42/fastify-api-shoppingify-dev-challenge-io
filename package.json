@@ -16,14 +16,17 @@
     "@fastify/cors": "^8.3.0",
     "@fastify/swagger": "^8.5.1",
     "@fastify/swagger-ui": "^1.8.1",
+    "@neondatabase/serverless": "^0.4.11",
     "drizzle-orm": "^0.26.5",
     "fastify": "^4.17.0",
     "pg": "^8.11.0",
+    "ws": "^8.13.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
     "@types/pg": "^8.10.2",
+    "@types/ws": "^8.5.5",
     "concurrently": "^8.1.0",
     "drizzle-kit": "^0.18.1",
     "rimraf": "^5.0.1",
