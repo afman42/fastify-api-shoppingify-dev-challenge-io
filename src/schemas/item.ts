@@ -108,7 +108,7 @@ let responseData422 = {
 
 export const properties200ResponseOject = {
   200: {
-    description: 'Returns Kategori model',
+    description: 'Returns Item model',
     type: 'object',
     properties: {
       ...propertiesJsonMetaAndData(responseData200Oject)
@@ -118,7 +118,7 @@ export const properties200ResponseOject = {
 
 export const properties200ResponseArray = {
   200: {
-    description: 'Returns Kategori model',
+    description: 'Returns Item model',
     type: 'object',
     properties: {
       ...propertiesJsonMetaAndData(responseData200Array)
@@ -128,7 +128,7 @@ export const properties200ResponseArray = {
 
 export const properties422Response = {
   422: {
-    description: 'Kategori Validation',
+    description: 'Item Validation',
     type: 'object',
     properties: {
       ...propertiesJsonMetaAndData(responseData422)
@@ -138,7 +138,7 @@ export const properties422Response = {
 
 export const properties404Response = {
   404: {
-    description: 'Kategori Not Found',
+    description: 'Item Not Found',
     type: 'object',
     properties: {
       ...propertiesJsonMetaAndData(responseData404)
@@ -155,7 +155,7 @@ export const properties404Response = {
 
 export const createItemJsonSchema: FastifySchema = {
     summary: "Returns a item",
-    description: 'Returns a item when create kategori',
+    description: 'Returns a item when create Item',
     tags: ['Item'],
     body: zodToJsonSchema(createItemBodySchema,"createItemBodySchema"),
     response: {
@@ -166,7 +166,7 @@ export const createItemJsonSchema: FastifySchema = {
 
 export const updateItemJsonSchema: FastifySchema = {
   summary: "Returns a item",
-    description: 'Returns a item when update kategori',
+    description: 'Returns a item when update Item',
     tags: ['Item'],
     body: zodToJsonSchema(createItemBodySchema,"createItemBodySchema"),
     params: {
@@ -186,8 +186,8 @@ export const updateItemJsonSchema: FastifySchema = {
 }
 
 export const allItemJsonSchema: FastifySchema = {
-  summary: "Returns all kategori",
-  description: 'Returns all kategori',
+  summary: "Returns all Item",
+  description: 'Returns all Item',
   tags: ['Item'],
   response: {
     ...properties200ResponseArray,

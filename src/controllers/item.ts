@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { jsonMetaAndData } from "../utils";
+import { formatDateNowISOString, jsonMetaAndData } from "../utils";
 import { createItemValidationSchema } from "../schemas/item";
 import { createItem, deleteItem, selectAll, selectWhereId, updateItem } from "../services/item";
 
@@ -46,7 +46,7 @@ export const updateItemHandler = async (request: FastifyRequest, reply: FastifyR
             console.log(fmtResultValidation)
             return reply.code(422).send(jsonMetaAndData(422,"error",fmtResultValidation))
         }
-        const result = await updateItem(nama, catatan, gambar_url, idKategori, id)
+        const result = await updateItem(nama, catatan, gambar_url, idKategori, id, formatDateNowISOString() as any)
         return reply.code(200).send(jsonMetaAndData(200,'success',result))   
     } catch (error) {
         reply.code(500).send(jsonMetaAndData(500,"error",error))
