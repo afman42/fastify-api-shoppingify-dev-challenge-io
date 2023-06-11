@@ -7,8 +7,8 @@ export async function createKategori(namaKategori: string){
     return result[0]
 }
 
-export async function updateKategori(namaKategori: string, id: string){
-    const result = await db.update(kategoris).set({ namaKategori }).where(eq(kategoris.id,parseInt(id))).returning()
+export async function updateKategori(namaKategori: string, id: string, updatedAt: Date){
+    const result = await db.update(kategoris).set({ namaKategori, updatedAt }).where(eq(kategoris.id,parseInt(id))).returning()
     return result[0]
 }
 
