@@ -55,6 +55,19 @@ const swaggerOptions: SwaggerOptions = {
               type: "number"
             },
           }
+        },
+        createListBodySchema: {
+          type: "object",
+          required: ["nama_list","status"],
+          properties: {
+            nama_list: {
+              type: 'string'
+            },
+            status: {
+              type: "string",
+              enum: ["completed","cancelled"]
+            },
+          }
         }
       },
     //   securityDefinitions: {

@@ -1,9 +1,11 @@
-import routeUser from "./users"
+import routeUser from "./user"
 import kategorisRoutes from "./kategori"
 import itemsRoutes from "./items"
+import listsRoutes from "./list"
 
 export {
     routeUser,
     kategorisRoutes,
-    itemsRoutes
+    itemsRoutes,
+    listsRoutes,
 }
