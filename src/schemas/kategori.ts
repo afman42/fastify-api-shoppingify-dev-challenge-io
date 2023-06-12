@@ -2,6 +2,7 @@ import { z } from "zod";
 import zodToJsonSchema from "zod-to-json-schema"
 import { propertiesJsonMetaAndData } from "../utils";
 import { FastifySchema } from "fastify";
+import { responseData200Array as responseData200ArrayItem } from "./item"
 
 export const createKategoriBodySchema = z.object({
     namaKategori: z.string()
@@ -27,6 +28,27 @@ let responseData200Array = {
       },
       updatedAt: {
           type: 'string',
+      }
+  } 
+}
+
+let responseData200WithItemArray = {
+  type: 'array',
+  properties: {
+      id: {
+          type: 'number',
+      },
+      namaKategori: {
+          type: 'string'
+      },
+      createdAt: {
+          type: 'string'
+      },
+      updatedAt: {
+          type: 'string',
+      },
+      items: {
+        ...responseData200ArrayItem,
       }
   } 
 }
@@ -83,6 +105,16 @@ export const properties200ResponseArray = {
     type: 'object',
     properties: {
       ...propertiesJsonMetaAndData(responseData200Array)
+    }
+  },
+}
+
+export const properties200ResponseWithItemArray = {
+  200: {
+    description: 'Returns Kategori model',
+    type: 'object',
+    properties: {
+      ...propertiesJsonMetaAndData(responseData200WithItemArray)
     }
   },
 }
@@ -152,6 +184,15 @@ export const allKategoriJsonSchema: FastifySchema = {
   tags: ['Kategori'],
   response: {
     ...properties200ResponseArray,
+  }
+}
+
+export const allKategoriWithItemJsonSchema: FastifySchema = {
+  summary: "Returns all kategori with item",
+  description: 'Returns all kategori with item',
+  tags: ['Kategori'],
+  response: {
+    ...properties200ResponseWithItemArray,
   }
 }
 

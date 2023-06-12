@@ -19,7 +19,7 @@ export const createItemValidationSchema = z.object({
 
 export type CreateItemBody = z.infer<typeof createItemBodySchema>
 
-let responseData200Array = {
+export let responseData200Array = {
   type: 'array',
   properties: {
       id: {
