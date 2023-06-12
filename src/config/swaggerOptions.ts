@@ -16,7 +16,7 @@ const swaggerOptions: SwaggerOptions = {
       consumes: ['application/json'],
       produces: ['application/json'],
       tags: [
-        { name: 'User', description: 'User related end-points' },
+        // { name: 'User', description: 'User related end-points' },
         { name: 'Kategori', description: 'Kategori related end-points' },
         { name: 'Item', description: 'Item related end-points' }
       ],
