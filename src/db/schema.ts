@@ -27,7 +27,7 @@ export const items = pgTable("items",{
   nama: varchar('nama').notNull(),
   catatan: text("catatan"),
   gambar_url: text('gambar_url'),
-  idKategori: serial("id_kategori").references(() => kategoris.id),
+  idKategori: integer("id_kategori").references(() => kategoris.id).notNull(),
   ...createdAtAndUpdatedAt
 })
 
@@ -47,11 +47,18 @@ export const listItem = pgTable("list_item",{
   ...createdAtAndUpdatedAt
 })
 
+export const kategoriRelations = relations(kategoris, ({ many }) => ({
+  items: many(items)
+}))
+
 export const listRelations = relations(lists,({many}) => ({
   items: many(listItem)
 }))
 
-export const itemRelations = relations(items,({ many }) => ({
-  kategoris: many(kategoris),
-  lists: many(lists)
+export const itemRelations = relations(items,({ many, one }) => ({
+  lists: many(lists),
+  kategori: one(kategoris,{
+    fields: [items.idKategori],
+    references: [kategoris.id]
+  })
 }))
