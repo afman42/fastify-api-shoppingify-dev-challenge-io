@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "aaea7c60-a948-4e4d-881b-1d9c9fa51c39",
+  "id": "f4705cb0-b5d4-4ed0-985e-c83867b7c8ec",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "items": {
@@ -34,9 +34,9 @@
         },
         "id_kategori": {
           "name": "id_kategori",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

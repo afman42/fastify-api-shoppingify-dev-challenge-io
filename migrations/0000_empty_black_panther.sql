@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS "items" (
 	"nama" varchar NOT NULL,
 	"catatan" text,
 	"gambar_url" text,
-	"id_kategori" serial NOT NULL,
+	"id_kategori" integer,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
