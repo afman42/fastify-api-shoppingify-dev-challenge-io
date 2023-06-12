@@ -7,8 +7,8 @@ export async function createItem(nama: string, catatan: string, gambar_url: stri
     return result[0]
 }
 
-export async function updateItem(nama: string, catatan: string, gambar_url: string, idKategori: number, id: string, updatedAt: Date){
-    const result = await db.update(items).set({ nama, catatan, gambar_url, idKategori, updatedAt }).where(eq(items.id,parseInt(id))).returning()
+export async function updateItem(nama: string, catatan: string, gambar_url: string, idKategori: number, id: string){
+    const result = await db.update(items).set({ nama, catatan, gambar_url, idKategori, updatedAt: new Date() }).where(eq(items.id,parseInt(id))).returning()
     return result[0]
 }
 

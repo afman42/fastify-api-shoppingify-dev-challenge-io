@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { formatDateNowISOString, jsonMetaAndData } from "../utils";
+import { jsonMetaAndData } from "../utils";
 import { createItemValidationSchema } from "../schemas/item";
 import { createItem, deleteItem, selectAll, selectWhereId, updateItem } from "../services/item";
 
@@ -13,7 +13,7 @@ export const createItemHandler = async (request: FastifyRequest, reply: FastifyR
         const resultValidation = createItemValidationSchema.safeParse({ nama, catatan, gambar_url, idKategori })
         if (!resultValidation.success) {
             const fmtResultValidation = resultValidation.error.format()
-            console.log(fmtResultValidation)
+            // console.log(fmtResultValidation)
             return reply.code(422).send(jsonMetaAndData(422,"error",fmtResultValidation))
         }
         const result = await createItem(nama, catatan, gambar_url, idKategori)
@@ -43,10 +43,10 @@ export const updateItemHandler = async (request: FastifyRequest, reply: FastifyR
         const resultValidation = createItemValidationSchema.safeParse({ nama, catatan, gambar_url, idKategori })
         if (!resultValidation.success) {
             const fmtResultValidation = resultValidation.error.format()
-            console.log(fmtResultValidation)
+            // console.log(fmtResultValidation)
             return reply.code(422).send(jsonMetaAndData(422,"error",fmtResultValidation))
         }
-        const result = await updateItem(nama, catatan, gambar_url, idKategori, id, formatDateNowISOString() as any)
+        const result = await updateItem(nama, catatan, gambar_url, idKategori, id)
         return reply.code(200).send(jsonMetaAndData(200,'success',result))   
     } catch (error) {
         reply.code(500).send(jsonMetaAndData(500,"error",error))
@@ -57,7 +57,7 @@ export const updateItemHandler = async (request: FastifyRequest, reply: FastifyR
 export const allItemHandler = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         const result = await selectAll()
-        console.log(result)
+        // console.log(result)
         return reply.code(200).send(jsonMetaAndData(200,"success",result))
     } catch (error) {
         reply.code(500).send(jsonMetaAndData(500,"error",error))

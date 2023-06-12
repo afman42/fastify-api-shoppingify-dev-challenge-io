@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { kategoris } from "../db/schema";
 import { db } from "../db";
 
@@ -7,8 +7,8 @@ export async function createKategori(namaKategori: string){
     return result[0]
 }
 
-export async function updateKategori(namaKategori: string, id: string, updatedAt: Date){
-    const result = await db.update(kategoris).set({ namaKategori, updatedAt }).where(eq(kategoris.id,parseInt(id))).returning()
+export async function updateKategori(namaKategori: string, id: string){
+    const result = await db.update(kategoris).set({ namaKategori, updatedAt: new Date() }).where(eq(kategoris.id,parseInt(id))).returning()
     return result[0]
 }
 
@@ -24,5 +24,14 @@ export async function selectWhereId(id: string) {
 
 export async function selectAll() {
     let result = await db.select().from(kategoris)
+    return result
+}
+
+export async function kategoriWithItem(){
+    let result = await db.query.kategoris.findMany({
+        with: {
+            items: true
+        }
+    })
     return result
 }

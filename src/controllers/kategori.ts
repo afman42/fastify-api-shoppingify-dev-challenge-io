@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { createKategoriValidationSchema } from "../schemas/kategori";
-import { createKategori, deleteKategori, selectAll, selectWhereId, updateKategori } from "../services/kategori";
+import { createKategori, deleteKategori, kategoriWithItem, selectAll, selectWhereId, updateKategori } from "../services/kategori";
 import { formatDateNowISOString, jsonMetaAndData } from "../utils";
 
 export const createKategoriHandler = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -9,7 +9,7 @@ export const createKategoriHandler = async (request: FastifyRequest, reply: Fast
         const resultValidation = createKategoriValidationSchema.safeParse({ namaKategori })
         if (!resultValidation.success) {
             const fmtResultValidation = resultValidation.error.format()
-            console.log(fmtResultValidation)
+            // console.log(fmtResultValidation)
             return reply.code(422).send(jsonMetaAndData(422,"error",fmtResultValidation))
         }
         const result = await createKategori(namaKategori)
@@ -34,10 +34,10 @@ export const updateKategoriHandler = async (request: FastifyRequest, reply: Fast
         const resultValidation = createKategoriValidationSchema.safeParse({ namaKategori })
         if (!resultValidation.success) {
             const fmtResultValidation = resultValidation.error.format()
-            console.log(fmtResultValidation)
+            // console.log(fmtResultValidation)
             return reply.code(422).send(jsonMetaAndData(422,"error",fmtResultValidation))
         }
-        const result = await updateKategori(namaKategori, id,formatDateNowISOString())
+        const result = await updateKategori(namaKategori, id)
         return reply.code(200).send(jsonMetaAndData(200,'success',result))   
     } catch (error) {
         reply.code(500).send(jsonMetaAndData(500,"error",error))
@@ -67,6 +67,16 @@ export const deleteKategoriHandler = async (request: FastifyRequest, reply: Fast
             return reply.code(404).send(jsonMetaAndData(404,"error",{ message: "not found" }))
         }
         const result = await deleteKategori(id)
+        return reply.code(200).send(jsonMetaAndData(200,"success",result))
+    } catch (error) {
+        reply.code(500).send(jsonMetaAndData(500,"error",error))
+        console.log(error)
+    }
+}
+
+export const allKategoriWithItemHandler = async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        const result = await kategoriWithItem()
         return reply.code(200).send(jsonMetaAndData(200,"success",result))
     } catch (error) {
         reply.code(500).send(jsonMetaAndData(500,"error",error))

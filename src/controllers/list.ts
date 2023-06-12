@@ -1,8 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { formatDateNowISOString, jsonMetaAndData } from "../utils";
 import { createListValidationSchema } from "../schemas/list";
-import { createList, selectAll, selectWhereId, updateList } from "../services/list";
-import { deleteList } from "../services/list";
+import { createList, selectAll, selectWhereId, updateList, deleteList } from "../services/list";
 
 export const createListHandler = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
@@ -11,7 +10,7 @@ export const createListHandler = async (request: FastifyRequest, reply: FastifyR
         const resultValidation = createListValidationSchema.safeParse({ nama_list, status })
         if (!resultValidation.success) {
             const fmtResultValidation = resultValidation.error.format()
-            console.log(fmtResultValidation)
+            // console.log(fmtResultValidation)
             return reply.code(422).send(jsonMetaAndData(422,"error",fmtResultValidation))
         }
         const result = await createList(nama_list, status)
@@ -40,7 +39,7 @@ export const updateListHandler = async (request: FastifyRequest, reply: FastifyR
             console.log(fmtResultValidation)
             return reply.code(422).send(jsonMetaAndData(422,"error",fmtResultValidation))
         }
-        const result = await updateList(nama_list, status , id,formatDateNowISOString())
+        const result = await updateList(nama_list, status , id)
         return reply.code(200).send(jsonMetaAndData(200,'success',result))   
     } catch (error) {
         reply.code(500).send(jsonMetaAndData(500,"error",error))

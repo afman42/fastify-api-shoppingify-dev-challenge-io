@@ -21,7 +21,3 @@ export const propertiesJsonMetaAndData = (data: any) => {
         data
     }
 }
-
-export const formatDateNowISOString = () => {
-    return new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Jakarta"}))
-}

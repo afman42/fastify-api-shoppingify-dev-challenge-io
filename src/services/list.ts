@@ -7,8 +7,8 @@ export async function createList(nama_list: string, status: 'completed' | 'cance
     return result[0]
 }
 
-export async function updateList(nama_list: string, status: 'completed' | 'cancelled', id: string, updatedAt: Date){
-    const result = await db.update(lists).set({ nama_list, status, updatedAt }).where(eq(lists.id,parseInt(id))).returning()
+export async function updateList(nama_list: string, status: 'completed' | 'cancelled', id: string){
+    const result = await db.update(lists).set({ nama_list, status, updatedAt: new Date() }).where(eq(lists.id,parseInt(id))).returning()
     return result[0]
 }
 
