@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS "items" (
 	"nama" varchar NOT NULL,
 	"catatan" text,
 	"gambar_url" text,
-	"id_kategori" integer,
+	"id_kategori" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -51,7 +51,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "list_item" ADD CONSTRAINT "list_item_id_item_lists_id_fk" FOREIGN KEY ("id_item") REFERENCES "lists"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "list_item" ADD CONSTRAINT "list_item_id_item_items_id_fk" FOREIGN KEY ("id_item") REFERENCES "items"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

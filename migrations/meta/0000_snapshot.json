@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "f4705cb0-b5d4-4ed0-985e-c83867b7c8ec",
+  "id": "7daf2fc9-93d7-4233-928b-13c4416f362b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "items": {
@@ -36,7 +36,7 @@
           "name": "id_kategori",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
@@ -164,10 +164,10 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "list_item_id_item_lists_id_fk": {
-          "name": "list_item_id_item_lists_id_fk",
+        "list_item_id_item_items_id_fk": {
+          "name": "list_item_id_item_items_id_fk",
           "tableFrom": "list_item",
-          "tableTo": "lists",
+          "tableTo": "items",
           "columnsFrom": [
             "id_item"
           ],

@@ -42,7 +42,7 @@ export const lists = pgTable("lists",{
 export const listItem = pgTable("list_item",{
   id: serial('id').primaryKey().notNull(),
   idList: integer("id_list").references(() => lists.id).notNull(),
-  idItem: integer("id_item").references(() => lists.id).notNull(),
+  idItem: integer("id_item").references(() => items.id).notNull(),
   jumlah: integer("jumlah").notNull(),
   ...createdAtAndUpdatedAt
 })
@@ -52,7 +52,7 @@ export const kategoriRelations = relations(kategoris, ({ many }) => ({
 }))
 
 export const listRelations = relations(lists,({many}) => ({
-  items: many(listItem)
+  listItem: many(listItem)
 }))
 
 export const itemRelations = relations(items,({ many, one }) => ({
@@ -60,5 +60,18 @@ export const itemRelations = relations(items,({ many, one }) => ({
   kategori: one(kategoris,{
     fields: [items.idKategori],
     references: [kategoris.id]
+  }),
+  listItem: one(listItem, {
+    fields: [items.id],
+    references: [listItem.idItem]
   })
 }))
+
+
+export const listItemRelations = relations(listItem, ({ one, many }) => ({
+	list: one(lists, {
+		fields: [listItem.idList],
+		references: [lists.id],
+	}),
+	items: many(items)
+}));
