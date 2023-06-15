@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { formatDateNowISOString, jsonMetaAndData } from "../utils";
+import { jsonMetaAndData } from "../utils";
 import { createListValidationSchema } from "../schemas/list";
 import { createList, selectAll, selectWhereId, updateList, deleteList } from "../services/list";
 

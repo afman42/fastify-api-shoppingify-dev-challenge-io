@@ -18,24 +18,29 @@ const swaggerOptions: SwaggerOptions = {
       tags: [
         // { name: 'User', description: 'User related end-points' },
         { name: 'Kategori', description: 'Kategori related end-points' },
-        { name: 'Item', description: 'Item related end-points' }
+        { name: 'Item', description: 'Item related end-points' },
+        { name: 'List', description: 'List related end-points' },
+        { name: 'ListItem', description: 'List Item related end-points' }
       ],
       definitions: {
-        User: {
-          type: 'object',
-          required: ['id', 'email'],
-          properties: {
-            id: { type: 'string', format: 'uuid' },
-            firstName: { type: 'string' },
-            lastName: { type: 'string' },
-            email: {type: 'string', format: 'email' }
-          }
-        },
+        // User: {
+        //   type: 'object',
+        //   required: ['id', 'email'],
+        //   properties: {
+        //     id: { type: 'string', format: 'uuid' },
+        //     firstName: { type: 'string' },
+        //     lastName: { type: 'string' },
+        //     email: {type: 'string', format: 'email' }
+        //   }
+        // },
         createKategoriBodySchema: {
           type: "object",
           required: ["namaKategori"],
           properties: {
             namaKategori: { type: "string" }
+          },
+          example: {
+            namaKategori: ""
           }
         },
         createItemBodySchema: {
@@ -54,6 +59,12 @@ const swaggerOptions: SwaggerOptions = {
             idKategori: {
               type: "number"
             },
+          },
+          example: {
+            nama: "",
+            catatan: "",
+            gambar_url: "",
+            idKategori: 0,
           }
         },
         createListBodySchema: {
@@ -67,6 +78,45 @@ const swaggerOptions: SwaggerOptions = {
               type: "string",
               enum: ["completed","cancelled"]
             },
+          },
+          example: {
+            nama_list: "",
+            status: "",
+          }
+        },
+        createListItemBodySchema: {
+          type: "object",
+          required: ["nama_list","status"],
+          properties: {
+            nama_list: {
+              type: 'string'
+            },
+            status: {
+              type: "string",
+              enum: ["completed","cancelled"]
+            },
+            items: {
+              type: "array",
+              required: ["itemId","jumlah"],
+              properties:{
+                itemId: {
+                  type: "number",
+                },
+                jumlah: {
+                  type: 'number',
+                }
+              }
+            }
+          },
+          example: {
+            nama_list: "",
+            status: "",
+            items: [
+              {
+                itemId: 0,
+                jumlah: 0
+              }
+            ]
           }
         }
       },
