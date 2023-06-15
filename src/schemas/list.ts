@@ -1,126 +1,181 @@
 import { z } from "zod";
-import zodToJsonSchema from "zod-to-json-schema"
+import zodToJsonSchema from "zod-to-json-schema";
 import { propertiesJsonMetaAndData } from "../utils";
 import { FastifySchema } from "fastify";
 
 export const createListBodySchema = z.object({
-    nama_list: z.string(),
-    status: z.string()
-})
+  nama_list: z.string(),
+  status: z.string(),
+});
 
 export const createListValidationSchema = z.object({
-    nama_list: z.string({ required_error: "The Nama List must be string"}).min(1,{ message: "The Nama List is required"}),
-    status: z.enum(["completed","cancelled"]),
-})
+  nama_list: z
+    .string({ required_error: "The Nama List must be string" })
+    .min(1, { message: "The Nama List is required" }),
+  status: z.enum(["completed", "cancelled"]),
+});
 
-export type CreateListBody = z.infer<typeof createListBodySchema>
+export type CreateListBody = z.infer<typeof createListBodySchema>;
 
 let responseData200Array = {
-  type: 'array',
+  type: "array",
   properties: {
-      id: {
-          type: 'number',
-      },
-      nama_list: {
-          type: 'string'
-      },
-      status: {
-          type: "string",
-          enum: ["completed","cancelled"]
-      },
-      createdAt: {
-          type: 'string'
-      },
-      updatedAt: {
-          type: 'string',
-      }
-  } 
-}
+    id: {
+      type: "number",
+    },
+    nama_list: {
+      type: "string",
+    },
+    status: {
+      type: "string",
+      enum: ["completed", "cancelled"],
+    },
+    createdAt: {
+      type: "string",
+    },
+    updatedAt: {
+      type: "string",
+    },
+  },
+};
 
 let responseData200Oject = {
-  type: 'object',
+  type: "object",
   properties: {
-      id: {
-          type: 'number',
-      },
-      nama_list: {
-        type: 'string'
-      },
-      status: {
-        type: "string",
-        enum: ["completed","cancelled"]
-      },
-      createdAt: {
-          type: 'string'
-      },
-      updatedAt: {
-          type: 'string',
-      }
-  } 
-}
+    id: {
+      type: "number",
+    },
+    nama_list: {
+      type: "string",
+    },
+    status: {
+      type: "string",
+      enum: ["completed", "cancelled"],
+    },
+    createdAt: {
+      type: "string",
+    },
+    updatedAt: {
+      type: "string",
+    },
+  },
+};
 
 let responseData404 = {
-  type: 'object',
+  type: "object",
   properties: {
-    message: { type: "string"}
-  }
-}
+    message: { type: "string" },
+  },
+};
 
 let responseData422 = {
   _errors: {
-    type: 'array'
+    type: "array",
   },
   nama_list: {
-      _errors: {
-          type: "array"
-      }
+    _errors: {
+      type: "array",
+    },
   },
   status: {
     _errors: {
-        type: "array"
-    }
+      type: "array",
+    },
   },
-}
+};
 
 export const properties200ResponseOject = {
   200: {
-    description: 'Returns List model',
-    type: 'object',
+    description: "Returns List model",
+    type: "object",
     properties: {
-      ...propertiesJsonMetaAndData(responseData200Oject)
-    }
+      ...propertiesJsonMetaAndData(responseData200Oject),
+    },
+    example: {
+      meta: {
+        statusCode: "number",
+        responseStatus: "string",
+      },
+      data: {
+        id: "number",
+        nama_list: "string",
+        status: "string",
+        createdAt: "string",
+        updatedAt: "string",
+      },
+    },
   },
-}
+};
 
 export const properties200ResponseArray = {
   200: {
-    description: 'Returns List model',
-    type: 'object',
+    description: "Returns List model",
+    type: "object",
     properties: {
-      ...propertiesJsonMetaAndData(responseData200Array)
-    }
+      ...propertiesJsonMetaAndData(responseData200Array),
+    },
+
+    example: {
+      meta: {
+        statusCode: "number",
+        responseStatus: "string",
+      },
+      data: [
+        {
+          id: "number",
+          nama_list: "string",
+          status: "string",
+          createdAt: "string",
+          updatedAt: "string",
+        },
+      ],
+    },
   },
-}
+};
 
 export const properties422Response = {
   422: {
-    description: 'List Validation',
-    type: 'object',
+    description: "List Validation",
+    type: "object",
     properties: {
-      ...propertiesJsonMetaAndData(responseData422)
-    }
-  }
-}
+      ...propertiesJsonMetaAndData(responseData422),
+    },
+    example: {
+      meta: {
+        statusCode: "number",
+        responseStatus: "string",
+      },
+      data: {
+        _errors: "array",
+        nama_list: {
+          _errors: "array",
+        },
+        status: {
+          _errors: "array",
+        },
+      },
+    },
+  },
+};
 
 export const properties404Response = {
   404: {
-    description: 'List Not Found',
-    type: 'object',
+    description: "List Not Found",
+    type: "object",
     properties: {
-      ...propertiesJsonMetaAndData(responseData404)
-    }
-  }
-}
+      ...propertiesJsonMetaAndData(responseData404),
+    },
+    example: {
+      meta: {
+        statusCode: "number",
+        responseStatus: "string",
+      },
+      data: {
+        message: "string",
+      },
+    },
+  },
+};
 
 // export const responseSchema = {
 //   response: {
@@ -130,61 +185,61 @@ export const properties404Response = {
 // }
 
 export const createListJsonSchema: FastifySchema = {
-    summary: "Returns a list",
-    description: 'Returns a list when create list',
-    tags: ['List'],
-    body: zodToJsonSchema(createListBodySchema,"createListBodySchema"),
-    response: {
-      ...properties200ResponseOject,
-      ...properties422Response
-    }
-}
+  summary: "Returns a list",
+  description: "Returns a list when create list",
+  tags: ["List"],
+  body: zodToJsonSchema(createListBodySchema, "createListBodySchema"),
+  response: {
+    ...properties200ResponseOject,
+    ...properties422Response,
+  },
+};
 
 export const updateListJsonSchema: FastifySchema = {
   summary: "Returns a list",
-    description: 'Returns a list when update list',
-    tags: ['List'],
-    body: zodToJsonSchema(createListBodySchema,"createListBodySchema"),
-    params: {
-      type: 'object',
-      properties: {
-        id: {
-          type: 'number',
-          description: 'id list'
-        }
-      }
-    },
-    response: {
-      ...properties200ResponseOject,
-      ...properties422Response,
-      ...properties404Response
-    }
-}
-
-export const allListJsonSchema: FastifySchema = {
-  summary: "Returns all kategori",
-  description: 'Returns all list',
-  tags: ['List'],
-  response: {
-    ...properties200ResponseArray,
-  }
-}
-
-export const deleteListJsonSchema: FastifySchema = {
-  summary: "Delete a item",
-  description: 'Delete a item',
-  tags: ['List'],
+  description: "Returns a list when update list",
+  tags: ["List"],
+  body: zodToJsonSchema(createListBodySchema, "createListBodySchema"),
   params: {
-    type: 'object',
+    type: "object",
     properties: {
       id: {
-        type: 'number',
-        description: 'id item'
-      }
-    }
+        type: "number",
+        description: "id list",
+      },
+    },
   },
   response: {
     ...properties200ResponseOject,
-    ...properties404Response
-  }
-}
+    ...properties422Response,
+    ...properties404Response,
+  },
+};
+
+export const allListJsonSchema: FastifySchema = {
+  summary: "Returns all list",
+  description: "Returns all list",
+  tags: ["List"],
+  response: {
+    ...properties200ResponseArray,
+  },
+};
+
+export const deleteListJsonSchema: FastifySchema = {
+  summary: "Delete a list",
+  description: "Delete a list",
+  tags: ["List"],
+  params: {
+    type: "object",
+    properties: {
+      id: {
+        type: "number",
+        description: "id list",
+      },
+    },
+  },
+  response: {
+    ...properties200ResponseOject,
+    ...properties404Response,
+  },
+};
