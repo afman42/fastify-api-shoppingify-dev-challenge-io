@@ -5,6 +5,7 @@ import {
   IColumnItem,
   createListItem,
   deleteListItem,
+  selectWhereIdWithListItem,
 } from "../services/listItem";
 import { selectWhereId } from "../services/list";
 
@@ -57,6 +58,32 @@ export const deleteListItemHandler = async (
     }
     const result = await deleteListItem(id);
     return reply.code(200).send(jsonMetaAndData(200, "success", result));
+  } catch (error) {
+    reply.code(500).send(jsonMetaAndData(500, "error", error));
+    console.log(error);
+  }
+};
+
+export const selectWhereIdListItemHandler = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  try {
+    const id = (request.params as any).id as string;
+    if (isNaN(parseInt(id))) {
+      return reply
+        .code(404)
+        .send(
+          jsonMetaAndData(404, "error", { message: "The id must be number" })
+        );
+    }
+    const resultId = await selectWhereIdWithListItem(parseInt(id))
+    if (!resultId) {
+      return reply
+        .code(404)
+        .send(jsonMetaAndData(404, "error", { message: "not found" }));
+    }
+    return reply.code(200).send(jsonMetaAndData(200, "success", resultId));
   } catch (error) {
     reply.code(500).send(jsonMetaAndData(500, "error", error));
     console.log(error);

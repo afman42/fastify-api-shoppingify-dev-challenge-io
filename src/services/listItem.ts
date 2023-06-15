@@ -27,22 +27,7 @@ export async function createListItem(
           jumlah: parseInt(items[index].jumlah),
         });
       }
-      const resultListWithItem = await db.query.lists.findFirst({
-        where: (lists, { eq }) => eq(lists.id, resultList.id),
-        with: {
-          listItem: {
-            with: {
-              items: {
-                with: {
-                  kategori: true,
-                },
-              },
-            },
-          },
-        },
-      });
-
-      return resultListWithItem;
+      return await selectWhereIdWithListItem(resultList.id);
     }
     throw Error("The Error must field items array");
   }
@@ -60,4 +45,23 @@ export async function deleteListItem(id: string) {
       .returning();
     return resultList;
   }
+}
+
+export async function selectWhereIdWithListItem(id: number) {
+  const resultListWithItem = await db.query.lists.findFirst({
+    where: (lists, { eq }) => eq(lists.id, id),
+    with: {
+      listItems: {
+        with: {
+          item: {
+            with: {
+              kategori: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return resultListWithItem;
 }

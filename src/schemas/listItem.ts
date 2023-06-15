@@ -155,6 +155,24 @@ export const createListItemJsonSchema: FastifySchema = {
   },
 };
 
+export const selectIdListItemJsonSchema: FastifySchema = {
+  summary: "Returns one list item",
+  description: "Returns one list item",
+  tags: ["ListItem"],
+  params: {
+    type: "object",
+    properties: {
+      id: {
+        type: "number",
+        description: "id list",
+      },
+    },
+  },
+  response: {
+    // ...properties200ResponseArray,
+  },
+};
+
 export const allListItemJsonSchema: FastifySchema = {
   summary: "Returns all list item",
   description: "Returns all list item",
