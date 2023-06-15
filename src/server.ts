@@ -1,5 +1,5 @@
 import fastify from "fastify"
-import { itemsRoutes, kategorisRoutes, listsRoutes } from "./routes"
+import { itemsRoutes, kategorisRoutes, listItemRoutes, listsRoutes } from "./routes"
 import { swaggerOptions } from "./config"
 
 const buildServer = () => {
@@ -26,6 +26,7 @@ const buildServer = () => {
     server.register(kategorisRoutes, { prefix: "/api/kategori"})
     server.register(itemsRoutes, { prefix: "/api/item"})
     server.register(listsRoutes, { prefix: "/api/list"})
+    server.register(listItemRoutes, { prefix: "/api/listItem"})
 
     return server
 }
