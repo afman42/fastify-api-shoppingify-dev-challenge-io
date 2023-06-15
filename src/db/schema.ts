@@ -51,11 +51,8 @@ export const kategoriRelations = relations(kategoris, ({ many }) => ({
   items: many(items)
 }))
 
-export const listRelations = relations(lists,({ one }) => ({
-  listItem: one(listItem, {
-    fields: [lists.id],
-    references: [listItem.idList]
-  })
+export const listRelations = relations(lists,({ many }) => ({
+  listItems: many(listItem)
 }))
 
 export const itemRelations = relations(items,({ many, one }) => ({
@@ -76,5 +73,8 @@ export const listItemRelations = relations(listItem, ({ one, many }) => ({
 		fields: [listItem.idList],
 		references: [lists.id],
 	}),
-	items: many(items)
+	item: one(items,{
+    fields: [listItem.idItem],
+    references: [items.id]
+  })
 }));
