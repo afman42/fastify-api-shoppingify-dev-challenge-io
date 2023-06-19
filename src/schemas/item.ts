@@ -2,6 +2,7 @@ import { z } from "zod";
 import zodToJsonSchema from "zod-to-json-schema";
 import { propertiesJsonMetaAndData } from "../utils";
 import { FastifySchema } from "fastify";
+import { properties200ResponseWithItemArray } from "./kategori";
 
 export const createItemBodySchema = z.object({
   nama: z.string(),
@@ -222,6 +223,23 @@ export const properties404Response = {
 //     ...properties422Response
 //   }
 // }
+
+export const allKategoriWithItemQueryJsonSchema: FastifySchema = {
+  summary: "Returns all kategori with query item",
+  description: "Returns all kategori with query item",
+  tags: ["Item"],
+  querystring: {
+    type: "object",
+    properties: {
+      namaItem: {
+        type: "string",
+      },
+    },
+  },
+  response: {
+    ...properties200ResponseWithItemArray,
+  },
+};
 
 export const createItemJsonSchema: FastifySchema = {
   summary: "Returns a item",

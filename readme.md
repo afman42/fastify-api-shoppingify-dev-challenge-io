@@ -17,4 +17,5 @@
 - `/api/listItem/create` - buat list dan juga buat item
 - `/api/listItem/:id` - tampil list semua item dan juga kategori
 - `/api/list/` - tampil list
+- `/api/items/search?namaItem=` - pencarian nama item
 - grafik belum dibuat
