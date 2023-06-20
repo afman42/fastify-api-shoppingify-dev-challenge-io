@@ -260,6 +260,23 @@ export const allKategoriJsonSchema: FastifySchema = {
   },
 };
 
+export const searchNamaKategoriJsonSchema: FastifySchema = {
+  summary: "Returns all kategori limit 3 with search",
+  description: "Returns all kategori limit 3 with search",
+  tags: ["Kategori"],
+  querystring: {
+    type: "object",
+    properties: {
+      namaKategori: {
+        type: "string",
+      },
+    },
+  },
+  response: {
+    ...properties200ResponseArray,
+  },
+};
+
 export const allKategoriWithItemJsonSchema: FastifySchema = {
   summary: "Returns all kategori with item",
   description: "Returns all kategori with item",

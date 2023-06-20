@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, ilike } from "drizzle-orm";
 import { kategoris } from "../db/schema";
 import { db } from "../db";
 
@@ -34,4 +34,12 @@ export async function kategoriWithItem(){
         }
     })
     return result
+}
+
+export async function searchNamaKategori(namaKategori: string) {
+  let result = await db.query.kategoris.findMany({
+    where: ilike(kategoris.namaKategori,"%"+ namaKategori + "%"),
+    limit: 3
+  })
+  return result
 }
