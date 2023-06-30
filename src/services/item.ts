@@ -1,5 +1,5 @@
-import { eq, ilike } from "drizzle-orm";
-import { items } from "../db/schema";
+import { eq, sql } from "drizzle-orm";
+import { items, kategoris } from "../db/schema";
 import { db } from "../db";
 
 export async function createItem(
@@ -52,12 +52,22 @@ export async function selectAll() {
 }
 
 export async function searchNamaItem(namaItem: string) {
-  let result = await db.query.kategoris.findMany({
-    with: {
-      items: {
-        where: ilike(items.nama, "%" + namaItem + "%"),
-      },
-    },
-  });
-  return result;
+  let result = await db.execute(
+    sql`select json_agg(
+        json_build_object(
+          'nama_kategori', kategori_nama,
+          'items', items_in_kategori
+        )
+      ) res
+      from (
+        select 
+          ${kategoris.namaKategori} as kategori_nama,
+          json_agg(json_build_object('namaItem',t.nama)) as items_in_kategori
+        from ${kategoris}
+        inner join items t on t.id_kategori = ${kategoris.id}
+        where t.nama ilike '%${sql.raw(namaItem)}%'
+        group by ${kategoris.id}, ${kategoris.namaKategori}
+      ) t`
+  );
+  return result.rows[0].res;
 }
