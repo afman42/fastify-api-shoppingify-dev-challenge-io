@@ -55,14 +55,16 @@ export async function searchNamaItem(namaItem: string) {
   let result = await db.execute(
     sql`select json_agg(
         json_build_object(
+          'id', kategori_id,
           'nama_kategori', kategori_nama,
           'items', items_in_kategori
         )
       ) res
       from (
         select 
+          ${kategoris.id} as kategori_id,
           ${kategoris.namaKategori} as kategori_nama,
-          json_agg(json_build_object('namaItem',t.nama)) as items_in_kategori
+          json_agg(json_build_object('id_item', t.id,'nama_item',t.nama)) as items_in_kategori
         from ${kategoris}
         inner join items t on t.id_kategori = ${kategoris.id}
         where t.nama ilike '%${sql.raw(namaItem)}%'
