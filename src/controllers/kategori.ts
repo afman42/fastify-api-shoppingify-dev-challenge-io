@@ -74,7 +74,7 @@ export const updateKategoriHandler = async (
 };
 
 export const allKategoriHandler = async (
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ) => {
   try {
@@ -115,7 +115,7 @@ export const deleteKategoriHandler = async (
 };
 
 export const allKategoriWithItemHandler = async (
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ) => {
   try {

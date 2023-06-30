@@ -17,5 +17,5 @@
 - `/api/listItem/:id` - tampil list semua item dan juga kategori
 - `/api/list/` - tampil list
 - `/api/items/search?namaItem=` - pencarian nama item
-- `/api/kategori/search?namaKategori` - pencarian nama kategori
+- `/api/kategori/search?namaKategori=` - pencarian nama kategori
 - grafik belum dibuat
