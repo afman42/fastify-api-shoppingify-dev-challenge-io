@@ -20,10 +20,12 @@
       "sourceMap": true,
       "strict": true,
       "target": "es2018",
-      "useDefineForClassFields": true
+      "useDefineForClassFields": true,
     },
     "include": [
       "src/**/*",
+      "app.ts",
+      "package.json",
       "tests/**/*"
     ]
   }

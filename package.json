@@ -6,8 +6,8 @@
   "scripts": {
     "build": "concurrently --kill-others \"npm run clean\" &&  tsc",
     "clean": "rimraf dist",
-    "start": "node dist/src/app.js",
-    "dev": "tsnd --respawn --transpile-only --exit-child src/app.ts"
+    "start": "node dist/app.js",
+    "dev": "tsnd --respawn --transpile-only --exit-child app.ts"
   },
   "keywords": [],
   "author": "",
