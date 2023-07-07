@@ -20,21 +20,35 @@ export type CreateListBody = z.infer<typeof createListBodySchema>;
 let responseData200Array = {
   type: "array",
   properties: {
-    id: {
-      type: "number",
-    },
-    nama_list: {
-      type: "string",
-    },
-    status: {
-      type: "string",
-      enum: ["completed", "cancelled"],
-    },
-    createdAt: {
-      type: "string",
-    },
-    updatedAt: {
-      type: "string",
+    result: {
+      type: "object",
+      list_month: {
+        type: "string",
+      },
+      list_year: {
+        type: "string",
+      },
+      lists_item: {
+        type: "array",
+        properties: {
+          id: {
+            type: "number",
+          },
+          nama_list: {
+            type: "string",
+          },
+          status: {
+            type: "string",
+            enum: ["completed", "cancelled"],
+          },
+          createdAt: {
+            type: "string",
+          },
+          updatedAt: {
+            type: "string",
+          },
+        },
+      },
     },
   },
 };
