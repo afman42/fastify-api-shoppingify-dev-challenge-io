@@ -62,5 +62,9 @@ from (
 ) art
     `
   );
-  return result.rows;
+  return result.rows.map((row: any) => ({
+    month: row.result.list_month,
+    year: row.result.list_year,
+    lists: row.result.lists_item,
+  }));
 }
