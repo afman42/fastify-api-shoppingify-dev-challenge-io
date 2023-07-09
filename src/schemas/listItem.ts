@@ -8,7 +8,7 @@ export const createListItemBodySchema = z.object({
   status: z.string(),
   items: z
     .object({
-      itemId: z.number(),
+      idItem: z.number(),
       jumlah: z.number(),
     })
     .array(),
@@ -21,7 +21,7 @@ export const createListItemValidationSchema = z.object({
   status: z.enum(["completed", "cancelled"]),
   items: z
     .object({
-      itemId: z.number().min(1, { message: "The itemId min 1 character" }),
+      idItem: z.number().min(1, { message: "The itemId min 1 character" }),
       jumlah: z.number().min(1, { message: "The Jumlah min 1 character" }),
     })
     .array()

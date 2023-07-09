@@ -9,10 +9,18 @@ type IColumnList = {
 };
 
 export type IColumnItem = {
-  itemId: string;
+  idItem: string;
   jumlah: string;
 };
 
+type AppendIColumnItem = {
+  idList: number;
+  idItem: number;
+  jumlah: number;
+  id?: number | undefined;
+  createdAt?: Date | undefined;
+  updatedAt?: Date | undefined;
+};
 export async function createListItem(
   lists: IColumnList,
   items: Array<IColumnItem>
@@ -20,13 +28,12 @@ export async function createListItem(
   if (items.length > 0) {
     const resultList = await createList(lists.nama_list, lists.status);
     if (resultList) {
-      for (let index = 0; index < items.length; index++) {
-        await db.insert(listItem).values({
-          idList: resultList.id,
-          idItem: parseInt(items[index].itemId),
-          jumlah: parseInt(items[index].jumlah),
-        });
-      }
+      const appendIdItems = items.map((itm: IColumnItem) => ({
+        idList: resultList.id,
+        jumlah: parseInt(itm.jumlah),
+        idItem: parseInt(itm.idItem),
+      })) satisfies AppendIColumnItem[];
+      await db.insert(listItem).values(appendIdItems as AppendIColumnItem[]);
       return await selectWhereIdWithListItem(resultList.id);
     }
     throw Error("The Error must field items array");
