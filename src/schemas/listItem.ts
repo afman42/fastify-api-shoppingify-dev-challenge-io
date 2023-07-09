@@ -81,6 +81,14 @@ let responseData404 = {
   },
 };
 
+let responseData200ArraySum = {
+  type: "array",
+  properties: {
+    nama: { type: "string" },
+    percent: { type: "number"}
+  },
+}
+
 let responseData422 = {
   _errors: {
     type: "array",
@@ -106,6 +114,16 @@ export const properties200ResponseOject = {
     },
   },
 };
+
+export const properties200ResponseArraySum = {
+  200: {
+    description: "Returns name and percent",
+    type: "object",
+    properties: {
+      ...propertiesJsonMetaAndData(responseData200ArraySum),
+    },
+  },
+}
 
 export const properties200ResponseArray = {
   200: {
@@ -179,6 +197,26 @@ export const allListItemJsonSchema: FastifySchema = {
   tags: ["ListItem"],
   response: {
     // ...properties200ResponseArray,
+  },
+};
+
+export const sumListItemJsonSchema: FastifySchema = {
+  summary: "All sum a list item",
+  description: "All sum a list item",
+  tags: ["ListItem"],
+  querystring: {
+    type: "object",
+    required: ["nama"],
+    properties: {
+      nama: {
+        type: "string",
+        description: "item or kategori",
+      },
+    },
+  },
+  response: {
+    ...properties200ResponseArraySum,
+    ...properties404Response,
   },
 };
 

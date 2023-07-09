@@ -16,6 +16,7 @@
 - `/api/listItem/create` - buat list dan juga buat item
 - `/api/listItem/:id` - tampil list semua item dan juga kategori
 - `/api/list/` - tampil list
+- `/api/listItem/?nama=` tampil nama item atau kategori paling terbanyak diisi dalam list bentuk percent
 - `/api/items/search?namaItem=` - pencarian nama item
 - `/api/kategori/search?namaKategori=` - pencarian nama kategori
 - grafik belum dibuat

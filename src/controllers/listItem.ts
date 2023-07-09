@@ -6,6 +6,8 @@ import {
   createListItem,
   deleteListItem,
   selectWhereIdWithListItem,
+  sumAndPercentageItem,
+  sumAndPercentageKategori,
 } from "../services/listItem";
 import { selectWhereId } from "../services/list";
 
@@ -77,13 +79,36 @@ export const selectWhereIdListItemHandler = async (
           jsonMetaAndData(404, "error", { message: "The id must be number" })
         );
     }
-    const resultId = await selectWhereIdWithListItem(parseInt(id))
+    const resultId = await selectWhereIdWithListItem(parseInt(id));
     if (!resultId) {
       return reply
         .code(404)
         .send(jsonMetaAndData(404, "error", { message: "not found" }));
     }
     return reply.code(200).send(jsonMetaAndData(200, "success", resultId));
+  } catch (error) {
+    reply.code(500).send(jsonMetaAndData(500, "error", error));
+    console.log(error);
+  }
+};
+
+export const sumAndPercentageItemOrKategori = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  try {
+    const nama = (request.query as any).nama as string;
+    if (nama.includes("item")) {
+      const result = await sumAndPercentageItem();
+      return reply.code(200).send(jsonMetaAndData(200, "success", result));
+    }
+    if (nama.includes("kategori")) {
+      const result = await sumAndPercentageKategori();
+      return reply.code(200).send(jsonMetaAndData(200, "success", result));
+    }
+    return reply
+      .code(200)
+      .send(jsonMetaAndData(404, "error", { message: "not found" }));
   } catch (error) {
     reply.code(500).send(jsonMetaAndData(500, "error", error));
     console.log(error);

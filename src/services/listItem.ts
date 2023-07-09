@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { db } from "../db";
-import { listItem, lists } from "../db/schema";
+import { listItem, lists, items, kategoris } from "../db/schema";
 import { createList } from "./list";
 
 type IColumnList = {
@@ -71,4 +71,50 @@ export async function selectWhereIdWithListItem(id: number) {
   });
 
   return resultListWithItem;
+}
+
+export async function sumAndPercentageItem() {
+  const result = await db
+    .select({
+      jumlah: sql<string>`sum(${listItem.jumlah}) as jumlah`,
+      semua_item: sql<string>`(select sum(li2.jumlah) from list_item li2) as semua_jumlah`,
+      nama: items.nama,
+    })
+    .from(listItem)
+    .innerJoin(items, eq(listItem.idItem, items.id))
+    .groupBy(items.nama)
+    .orderBy(desc(sql`jumlah`))
+    .limit(3);
+
+  return result.map(
+    (v: { jumlah: string; semua_item: string; nama: string }) => ({
+      nama: v.nama,
+      percent: Math.round((parseInt(v.jumlah) / parseInt(v.semua_item)) * 100),
+    })
+  );
+}
+
+export async function sumAndPercentageKategori() {
+  const result = await db
+    .select({
+      hitung: sql<string>`count(${kategoris.id}) as hitung`,
+      semua_kategori: sql<string>`(select count(k2.id) from list_item li inner join items i on li.id_item = i.id inner join kategoris k2 on i.id_kategori = k2.id) as semua_kategori`,
+      nama: kategoris.namaKategori,
+    })
+    .from(listItem)
+    .innerJoin(items, eq(listItem.idItem, items.id))
+    .innerJoin(kategoris, eq(items.idKategori, kategoris.id))
+    .groupBy(kategoris.namaKategori)
+    .orderBy(desc(sql`hitung`))
+    .limit(3);
+
+  // return result
+  return result.map(
+    (v: { hitung: string; semua_kategori: string; nama: string }) => ({
+      nama: v.nama,
+      percent: Math.round(
+        (parseInt(v.hitung) / parseInt(v.semua_kategori)) * 100
+      ),
+    })
+  );
 }
