@@ -81,13 +81,21 @@ let responseData404 = {
   },
 };
 
+let responseData200ArraySumEveryMonth = {
+  type: "array",
+  properties: {
+    month: { type: "string" },
+    sum: { type: "number" },
+  },
+};
+
 let responseData200ArraySum = {
   type: "array",
   properties: {
     nama: { type: "string" },
-    percent: { type: "number"}
+    percent: { type: "number" },
   },
-}
+};
 
 let responseData422 = {
   _errors: {
@@ -115,6 +123,22 @@ export const properties200ResponseOject = {
   },
 };
 
+export const properties200ResponseArraySumEveryMonth = {
+  200: {
+    description: "Return Sum Every Month",
+    type: "object",
+    properties: {
+      ...propertiesJsonMetaAndData(responseData200ArraySumEveryMonth),
+    },
+    example: [
+      {
+        month: "string",
+        sum: "number",
+      },
+    ],
+  },
+};
+
 export const properties200ResponseArraySum = {
   200: {
     description: "Returns name and percent",
@@ -123,7 +147,7 @@ export const properties200ResponseArraySum = {
       ...propertiesJsonMetaAndData(responseData200ArraySum),
     },
   },
-}
+};
 
 export const properties200ResponseArray = {
   200: {
@@ -216,6 +240,16 @@ export const sumListItemJsonSchema: FastifySchema = {
   },
   response: {
     ...properties200ResponseArraySum,
+    ...properties404Response,
+  },
+};
+
+export const sumEveryMonthListItemJsonSchema: FastifySchema = {
+  summary: "Sum Every Month a list item",
+  description: "Sum Every Month a list item",
+  tags: ["ListItem"],
+  response: {
+    ...properties200ResponseArraySumEveryMonth,
     ...properties404Response,
   },
 };

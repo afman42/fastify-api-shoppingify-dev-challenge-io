@@ -8,6 +8,7 @@ import {
   selectWhereIdWithListItem,
   sumAndPercentageItem,
   sumAndPercentageKategori,
+  sumEveryMonth,
 } from "../services/listItem";
 import { selectWhereId } from "../services/list";
 
@@ -19,7 +20,6 @@ export const createListItemHandler = async (
     const nama_list = (request.body as any).nama_list as string;
     const status = (request.body as any).status as "completed" | "cancelled";
     const items = (request.body as any).items as Array<IColumnItem>;
-    // console.log(items)
     const resultValidation = createListItemValidationSchema.safeParse({
       nama_list,
       status,
@@ -107,8 +107,21 @@ export const sumAndPercentageItemOrKategori = async (
       return reply.code(200).send(jsonMetaAndData(200, "success", result));
     }
     return reply
-      .code(200)
+      .code(404)
       .send(jsonMetaAndData(404, "error", { message: "not found" }));
+  } catch (error) {
+    reply.code(500).send(jsonMetaAndData(500, "error", error));
+    console.log(error);
+  }
+};
+
+export const sumEveryMonthHandler = async (
+  _request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  try {
+    const result = await sumEveryMonth();
+    return reply.code(200).send(jsonMetaAndData(200, "success", result));
   } catch (error) {
     reply.code(500).send(jsonMetaAndData(500, "error", error));
     console.log(error);

@@ -118,3 +118,22 @@ export async function sumAndPercentageKategori() {
     })
   );
 }
+
+export async function sumEveryMonth() {
+  const result = await db
+    .select({
+      trunc_month: sql<string>`date_trunc('month', ${lists.createdAt}) as trunc_month`,
+      list_month: sql<string>`trim(to_char(${lists.createdAt},'Month')) as list_month`,
+      sum: sql<string>`sum(${listItem.jumlah}) as sum`,
+    })
+    .from(listItem)
+    .innerJoin(items, eq(listItem.idItem, items.id))
+    .innerJoin(lists, eq(listItem.idList, lists.id))
+    .groupBy(sql`trunc_month`, sql`list_month`)
+    .orderBy(desc(sql`list_month`));
+
+  return result.map((item: any) => ({
+    month: item.list_month,
+    sum: parseInt(item.sum),
+  }));
+}

@@ -19,4 +19,4 @@
 - `/api/listItem/?nama=` tampil nama item atau kategori paling terbanyak diisi dalam list bentuk percent
 - `/api/items/search?namaItem=` - pencarian nama item
 - `/api/kategori/search?namaKategori=` - pencarian nama kategori
-- grafik belum dibuat
+- `/api/listItem/sum-every-month` - untuk [grafik](https://recharts.org/en-US/examples)

@@ -4,6 +4,7 @@ import {
   createListItemJsonSchema,
   deleteListItemJsonSchema,
   selectIdListItemJsonSchema,
+  sumEveryMonthListItemJsonSchema,
   sumListItemJsonSchema,
 } from "../schemas/listItem";
 import {
@@ -11,6 +12,7 @@ import {
   deleteListItemHandler,
   selectWhereIdListItemHandler,
   sumAndPercentageItemOrKategori,
+  sumEveryMonthHandler,
 } from "../controllers/listItem";
 
 export default async function listItemRoutes(app: FastifyInstance) {
@@ -20,6 +22,13 @@ export default async function listItemRoutes(app: FastifyInstance) {
       schema: sumListItemJsonSchema,
     },
     sumAndPercentageItemOrKategori
+  );
+  app.get(
+    "/sum-every-month",
+    {
+      schema: sumEveryMonthListItemJsonSchema,
+    },
+    sumEveryMonthHandler
   );
   app.get(
     "/:id",
