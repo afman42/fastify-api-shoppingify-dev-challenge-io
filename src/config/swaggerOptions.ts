@@ -1,5 +1,5 @@
 import { SwaggerOptions } from "@fastify/swagger";
-import { env } from "./env"
+import { env } from "./env";
 
 const swaggerOptions: SwaggerOptions = {
   swagger: {
@@ -12,8 +12,12 @@ const swaggerOptions: SwaggerOptions = {
       url: "https://swagger.io",
       description: "Find more info here",
     },
-    host: `${env.HOST.includes('0.0.0.0') ? env.HOST : 'localhost' }:3000`,
-    schemes: ["http","https"],
+    host: `${
+      env.HOST.includes("0.0.0.0")
+        ?  process.env.CYCLIC_URL && process.env.CYCLIC_URL.split("//")[1]
+        : "localhost"
+    }:3000`,
+    schemes: ["http", "https"],
     consumes: ["application/json"],
     produces: ["application/json"],
     tags: [
