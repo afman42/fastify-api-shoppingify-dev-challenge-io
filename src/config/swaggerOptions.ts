@@ -15,8 +15,8 @@ const swaggerOptions: SwaggerOptions = {
     host: `${
       env.HOST.includes("0.0.0.0")
         ?  process.env.CYCLIC_URL && process.env.CYCLIC_URL.split("//")[1]
-        : "localhost"
-    }:3000`,
+        : "localhost:3000"
+    }`,
     schemes: ["http", "https"],
     consumes: ["application/json"],
     produces: ["application/json"],
