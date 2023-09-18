@@ -13,8 +13,8 @@ const swaggerOptions: SwaggerOptions = {
       description: "Find more info here",
     },
     host: `${
-      env.HOST.includes("0.0.0.0")
-        ?  process.env.CYCLIC_URL && process.env.CYCLIC_URL.split("//")[1]
+      process.env.BASE_URL ?
+        process.env.BASE_URL?.split("//")[1]
         : "localhost:3000"
     }`,
     schemes: ["http", "https"],
